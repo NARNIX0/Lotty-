@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'AEONIK';
+  src: url('/fonts/aeonik-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'AEONIK';
+  src: url('/fonts/aeonik-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #B8FF00;
+  --lime-soft: #D4FF5E;
+  --lime-bright: #B8FF00;
+  --lime-dark: #95CC00;
+  --gray-soft: #1a1a1a;
+  --gray-medium: #2a2a2a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'AEONIK', sans-serif;
+}
+
+/* Gradient utilities */
+.gradient-lime {
+  background: linear-gradient(135deg, #D4FF5E 0%, #B8FF00 100%);
+}
+
+.gradient-lime-soft {
+  background: linear-gradient(135deg, #E8FFB7 0%, #D4FF5E 50%, #B8FF00 100%);
+}
+
+.gradient-dark {
+  background: linear-gradient(180deg, #000000 0%, #1a1a1a 100%);
+}
+
+.gradient-dark-radial {
+  background: radial-gradient(circle at top center, #2a2a2a 0%, #000000 100%);
 }
