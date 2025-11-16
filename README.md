@@ -1,52 +1,66 @@
-# Lotty - Family Lottery Pool
+## Foundry
 
-A minimal proof of concept for a family/friend lottery pool system.
+**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
 
-## Features
+Foundry consists of:
 
-- ✅ Join lottery with your name
-- ✅ View all participants in real-time
-- ✅ Random winner selection
-- ✅ Simple, clean UI
+- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
+- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
+- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
+- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
 
-## Tech Stack
+## Documentation
 
-- React + TypeScript
-- Vite
-- Tailwind CSS
-- LocalStorage (no backend)
-
-## Getting Started
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Run the development server:
-```bash
-npm run dev
-```
-
-3. Open your browser to `http://localhost:5173`
+https://book.getfoundry.sh/
 
 ## Usage
 
-1. **Join the Pool**: Enter your name on the home page and click "Join"
-2. **View Participants**: See everyone who has joined the current round
-3. **Draw Winner**: Navigate to the winner page and click "Draw Winner" to randomly select a winner
-4. **Reset**: Clear all participants to start a new round
+### Build
 
-## Prize Pool
+```shell
+$ forge build
+```
 
-- Each participant contributes $10
-- Winner takes the entire pool
-- Example: 5 participants = $50 prize
+### Test
 
-## Future Enhancements
+```shell
+$ forge test
+```
 
-- Blockchain integration
-- Cryptocurrency payments
-- Smart contract automation
-- Multi-round tracking
+### Format
 
+```shell
+$ forge fmt
+```
+
+### Gas Snapshots
+
+```shell
+$ forge snapshot
+```
+
+### Anvil
+
+```shell
+$ anvil
+```
+
+### Deploy
+
+```shell
+$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```
+
+### Cast
+
+```shell
+$ cast <subcommand>
+```
+
+### Help
+
+```shell
+$ forge --help
+$ anvil --help
+$ cast --help
+```
