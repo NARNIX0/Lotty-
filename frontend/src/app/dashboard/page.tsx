@@ -2,12 +2,16 @@
 
 import { useWalletConnection } from '@/hooks/useWalletConnection'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { CreateLotteryModal } from '@/components/lottery/CreateLotteryModal'
+import { useCurrentRoundId } from '@/hooks/useActiveLotteries'
 
 export default function Dashboard() {
   const { address, isConnected } = useWalletConnection()
   const router = useRouter()
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const { currentRoundId, isLoading } = useCurrentRoundId()
 
   // Redirect to home if not connected
   useEffect(() => {
@@ -22,8 +26,8 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black px-6 py-8">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] to-black" />
+      {/* Money background with dark fade gradient */}
+      <div className="money-background" />
       
       <div className="relative z-10 mx-auto max-w-[1200px]">
         {/* Section 1: User Greeting */}
@@ -38,7 +42,7 @@ export default function Dashboard() {
             className="mt-2 text-center text-sm text-gray-400"
             style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
           >
-            Your lottery stats
+            Here's how much you've lost to your "friends"
           </p>
         </div>
 
@@ -46,7 +50,7 @@ export default function Dashboard() {
         <div className="mb-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-[#333333] bg-[#1A1A1A] px-6 py-4 text-center">
             <p className="text-sm text-gray-400" style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}>
-              Total Entries
+              Times You've Paid
             </p>
             <p className="mt-2 text-4xl text-[#B8FF00]" style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}>
               0
@@ -55,7 +59,7 @@ export default function Dashboard() {
           
           <div className="rounded-lg border border-[#333333] bg-[#1A1A1A] px-6 py-4 text-center">
             <p className="text-sm text-gray-400" style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}>
-              Total Won
+              Total Won (LOL)
             </p>
             <p className="mt-2 text-4xl text-[#B8FF00]" style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}>
               $0.00
@@ -64,7 +68,7 @@ export default function Dashboard() {
           
           <div className="rounded-lg border border-[#333333] bg-[#1A1A1A] px-6 py-4 text-center">
             <p className="text-sm text-gray-400" style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}>
-              Win Rate
+              Win Rate (Optimistic)
             </p>
             <p className="mt-2 text-4xl text-[#B8FF00]" style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}>
               0%
@@ -78,7 +82,7 @@ export default function Dashboard() {
             className="mb-6 text-xl text-white"
             style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
           >
-            Active Lottery
+            Current Money Pit
           </h2>
           
           <p 
@@ -99,25 +103,45 @@ export default function Dashboard() {
             className="mt-2 text-sm text-gray-400"
             style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
           >
-            0 people joined
+            0 people have thrown money away yet
           </p>
           
-          <div className="mt-6 flex justify-center gap-4">
-            <button
-              className="rounded-lg bg-gradient-to-r from-[#D4FF5E] to-[#B8FF00] px-6 py-3 text-black shadow-md transition-all hover:shadow-lg hover:from-[#E8FFB7] hover:to-[#D4FF5E]"
-              style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
-            >
-              Create Lottery
-            </button>
+          <div className="mt-6 flex flex-col items-center gap-4">
+            {/* Show current lottery info */}
+            {!isLoading && currentRoundId > 0 && (
+              <p
+                className="text-sm text-gray-400"
+                style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
+              >
+                Latest Lottery: #{currentRoundId}
+              </p>
+            )}
             
-            <button
-              className="rounded-lg bg-gradient-to-r from-[#D4FF5E] to-[#B8FF00] px-6 py-3 text-black shadow-md transition-all hover:shadow-lg hover:from-[#E8FFB7] hover:to-[#D4FF5E]"
-              style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
-            >
-              Join Lottery
-            </button>
+            <div className="flex gap-4">
+              <button
+                onClick={() => setShowCreateModal(true)}
+                className="rounded-lg bg-gradient-to-r from-[#D4FF5E] to-[#B8FF00] px-6 py-3 text-black shadow-md transition-all hover:shadow-lg hover:from-[#E8FFB7] hover:to-[#D4FF5E]"
+                style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
+              >
+                Create Money Trap
+              </button>
+              
+              <button
+                onClick={() => router.push('/join')}
+                className="rounded-lg bg-gradient-to-r from-[#D4FF5E] to-[#B8FF00] px-6 py-3 text-black shadow-md transition-all hover:shadow-lg hover:from-[#E8FFB7] hover:to-[#D4FF5E]"
+                style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
+              >
+                Throw Money Away
+              </button>
+            </div>
           </div>
         </div>
+
+        {/* Create Lottery Modal */}
+        <CreateLotteryModal 
+          isOpen={showCreateModal} 
+          onClose={() => setShowCreateModal(false)} 
+        />
 
         {/* Section 4: Navigation Links */}
         <div className="flex justify-center gap-8">
@@ -126,7 +150,7 @@ export default function Dashboard() {
             className="text-white transition-colors hover:text-[#B8FF00] hover:underline"
             style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
           >
-            View Leaderboard
+            See Who's Winning (Not You)
           </Link>
           
           <Link
@@ -134,7 +158,7 @@ export default function Dashboard() {
             className="text-white transition-colors hover:text-[#B8FF00] hover:underline"
             style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
           >
-            View History
+            Review Your Losses
           </Link>
           
           <Link

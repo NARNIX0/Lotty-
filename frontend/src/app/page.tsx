@@ -10,24 +10,63 @@ export default function Home() {
   const { isConnected } = useWalletConnection()
   const router = useRouter()
 
-  // Redirect to dashboard if connected
-  useEffect(() => {
-    if (isConnected) {
-      router.push('/dashboard')
-    }
-  }, [isConnected, router])
-
+  // Show connected variant instead of redirecting
   if (isConnected) {
-    return null // Will redirect
+    return (
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black px-4 py-12">
+        {/* Money background with dark fade gradient */}
+        <div className="money-background" />
+        
+        <div className="relative z-10 flex max-w-3xl flex-col items-center justify-center text-center">
+          {/* Big centered logo */}
+          <Image 
+            src="/lotty-logo.png" 
+            alt="Lotty" 
+            width={700} 
+            height={233}
+            priority
+            className="mb-12 h-auto w-80 md:w-[500px]"
+          />
+          
+          <h1 
+            className="mb-6 text-4xl leading-tight text-white md:text-5xl"
+            style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
+          >
+            Welcome back, sucker!
+          </h1>
+          
+          <p 
+            className="mb-8 text-base text-white/90 md:text-lg"
+            style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
+          >
+            Your wallet is connected and your money is ready to be redistributed
+          </p>
+          
+          {/* Go to Dashboard Button */}
+          <button
+            onClick={() => router.push('/dashboard')}
+            className="group relative w-full overflow-hidden rounded-lg px-8 py-4 text-lg text-black shadow-lg transition-all hover:shadow-xl md:w-auto"
+            style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#D4FF5E] to-[#B8FF00] transition-all group-hover:from-[#E8FFB7] group-hover:to-[#D4FF5E]" />
+            <span className="relative z-10">Go to Dashboard</span>
+          </button>
+          
+          <p 
+            className="mt-6 max-w-md text-sm text-gray-400"
+            style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
+          >
+            Check how much you've lost, create new ways to lose money, or join someone else's scheme
+          </p>
+        </div>
+      </div>
+    )
   }
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black px-4 py-12">
-      {/* Extended linear gradient background - more subtle and larger radius */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#3a3a3a] via-[#2a2a2a] via-30% to-[#1a1a1a] to-60% to-black" />
-      
-      {/* Subtle wide glow effect */}
-      <div className="absolute left-1/2 top-1/3 h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-[#B8FF00] opacity-5 blur-[120px]" />
+      {/* Money background with dark fade gradient */}
+      <div className="money-background" />
       
       <div className="relative z-10 flex max-w-3xl flex-col items-center justify-center text-center">
         {/* Big centered logo */}
@@ -40,18 +79,25 @@ export default function Home() {
           className="mb-12 h-auto w-80 md:w-[500px]"
         />
         
+        <p 
+          className="mb-8 text-base text-white/90 md:text-lg"
+          style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
+        >
+          where someone always wins, just not you... yet
+        </p>
+        
         <h1 
           className="mb-6 text-4xl leading-tight text-white md:text-5xl"
           style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
         >
-          Fair, transparent, automated friend lotteries
+          Turn your friend group into a casino
         </h1>
         
         <p 
           className="mb-8 text-base text-white/90 md:text-lg"
           style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
         >
-          Create or join a lottery pool and let smart contracts manage everything
+          Because nothing says "I love you" like taking their money with blockchain
         </p>
         
         <WalletConnect />
@@ -60,8 +106,8 @@ export default function Home() {
           className="mt-6 max-w-md text-sm text-gray-400"
           style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
         >
-          Connect your wallet to create lottery pools with friends. Each entry is recorded on-chain, 
-          and winners are selected automatically using verifiable randomness.
+          Connect your wallet to monetize your relationships. Each entry is permanently etched on-chain, 
+          so your family can see exactly how much you lost. Winners chosen by algorithms that definitely don't favor anyone. Probably.
         </p>
       </div>
     </div>

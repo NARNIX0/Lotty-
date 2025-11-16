@@ -2,6 +2,7 @@
 
 import { useConnect, useDisconnect } from 'wagmi'
 import { useWalletConnection } from '@/hooks/useWalletConnection'
+import { AddArcNetwork } from './AddArcNetwork'
 import { useState } from 'react'
 
 export function WalletConnect() {
@@ -76,13 +77,16 @@ export function WalletConnect() {
 
   // Not connected state
   return (
-    <button
-      onClick={handleConnect}
-      className="rounded-lg bg-gradient-to-r from-[#D4FF5E] to-[#B8FF00] px-6 py-3 text-black shadow-md transition-all hover:shadow-lg hover:from-[#E8FFB7] hover:to-[#D4FF5E]"
-      style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
-    >
-      Connect Wallet
-    </button>
+    <div className="flex flex-col items-center gap-3">
+      <button
+        onClick={handleConnect}
+        className="rounded-lg bg-gradient-to-r from-[#D4FF5E] to-[#B8FF00] px-6 py-3 text-black shadow-md transition-all hover:shadow-lg hover:from-[#E8FFB7] hover:to-[#D4FF5E]"
+        style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
+      >
+        Connect Wallet
+      </button>
+      <AddArcNetwork />
+    </div>
   )
 }
 

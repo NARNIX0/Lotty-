@@ -59,8 +59,8 @@ export default function HistoryPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black px-6 py-8">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] to-black" />
+      {/* Money background with dark fade gradient */}
+      <div className="money-background" />
 
       <div className="relative z-10 mx-auto max-w-[1200px]">
         {/* Heading */}
@@ -68,7 +68,7 @@ export default function HistoryPage() {
           className="mb-8 text-center text-4xl text-white"
           style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
         >
-          Your Entry History
+          Your Loss History
         </h1>
 
         {/* Filter Buttons */}
@@ -130,7 +130,7 @@ export default function HistoryPage() {
                 className="text-gray-400"
                 style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
               >
-                No entries found
+                No losses recorded yet (give it time)
               </p>
             </div>
           ) : (
@@ -185,7 +185,7 @@ export default function HistoryPage() {
               className="text-gray-400"
               style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
             >
-              You haven't entered any lotteries yet
+              You haven't lost any money yet (what are you waiting for?)
             </p>
           </div>
         )}

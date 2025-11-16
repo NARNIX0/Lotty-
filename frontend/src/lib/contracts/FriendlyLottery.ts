@@ -30,19 +30,39 @@ export const FRIENDLY_LOTTERY_ABI = [
     "outputs": [{"name": "", "type": "bool"}],
     "stateMutability": "view"
   },
-  {
-    "type": "function",
-    "name": "enterLottery",
-    "inputs": [{"name": "_roundId", "type": "uint256"}],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
+        {
+          "type": "function",
+          "name": "enterLottery",
+          "inputs": [{"name": "_roundId", "type": "uint256"}],
+          "outputs": [],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "transfer",
+          "inputs": [
+            {"name": "to", "type": "address"},
+            {"name": "amount", "type": "uint256"}
+          ],
+          "outputs": [{"name": "", "type": "bool"}],
+          "stateMutability": "nonpayable"
+        },
   {
     "type": "function",
     "name": "currentRoundId",
     "inputs": [],
     "outputs": [{"name": "", "type": "uint256"}],
     "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "createRound",
+    "inputs": [
+      {"name": "_entryFee", "type": "uint256"},
+      {"name": "_durationInDays", "type": "uint256"}
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
   }
 ] as const
 

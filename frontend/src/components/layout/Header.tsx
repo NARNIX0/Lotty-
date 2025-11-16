@@ -4,9 +4,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useWalletConnection } from '@/hooks/useWalletConnection'
+import { useEffect, useState } from 'react'
 
 const navLinks = [
   { href: '/dashboard', label: 'Dashboard' },
+  { href: '/join', label: 'Join' },
   { href: '/leaderboard', label: 'Leaderboard' },
   { href: '/history', label: 'History' },
   { href: '/settings', label: 'Settings' },
@@ -15,9 +17,15 @@ const navLinks = [
 export function Header() {
   const pathname = usePathname()
   const { isConnected } = useWalletConnection()
+  const [mounted, setMounted] = useState(false)
+
+  // Only render navigation after component mounts on client
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
-    <header className="bg-gradient-to-b from-[#1a1a1a] to-black px-6 py-4 shadow-lg">
+    <header className="px-6 py-4 shadow-lg" style={{ backgroundColor: '#2a2a2a' }}>
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         <Link href="/">
           <Image 
@@ -30,8 +38,8 @@ export function Header() {
           />
         </Link>
 
-        {/* Navigation Links - Only show if wallet connected */}
-        {isConnected && (
+        {/* Navigation Links - Only show if wallet connected and mounted */}
+        {mounted && isConnected && (
           <nav className="hidden md:flex items-center gap-4">
             {navLinks.map((link) => (
               <Link

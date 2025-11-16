@@ -48,8 +48,8 @@ export default function LeaderboardPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black px-6 py-8">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] to-black" />
+      {/* Money background with dark fade gradient */}
+      <div className="money-background" />
 
       <div className="relative z-10 mx-auto max-w-[1200px]">
         {/* Heading */}
@@ -57,7 +57,7 @@ export default function LeaderboardPage() {
           className="mb-2 text-center text-4xl text-white"
           style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
         >
-          Leaderboard
+          Winners Circle (You're Not Here)
         </h1>
 
         {/* Subtext */}
@@ -65,7 +65,7 @@ export default function LeaderboardPage() {
           className="mb-8 text-center text-sm text-gray-400"
           style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
         >
-          Top players
+          People who actually win (unlike you)
         </p>
 
         {/* Filter Buttons */}
