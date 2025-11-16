@@ -29,13 +29,13 @@ export default function Dashboard() {
         {/* Section 1: User Greeting */}
         <div className="mb-8">
           <h1 
-            className="text-2xl text-white"
+            className="text-center text-4xl text-white"
             style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
           >
             Hello, {address?.slice(0, 6)}...{address?.slice(-4)}
           </h1>
           <p 
-            className="mt-1 text-sm text-gray-400"
+            className="mt-2 text-center text-sm text-gray-400"
             style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
           >
             Your lottery stats
