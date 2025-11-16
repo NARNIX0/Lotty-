@@ -2,20 +2,57 @@
 
 import { CountdownTimer } from '@/components/lottery/CountdownTimer'
 import { useParams } from 'next/navigation'
+import { useGetLottery, useHasEntered, useEnterLottery } from '@/hooks/useSmartContract'
+import { useWalletConnection } from '@/hooks/useWalletConnection'
+import { formatUSDC } from '@/lib/contracts/FriendlyLottery'
 
 export default function LotteryPage() {
   const params = useParams()
-  const id = params.id
+  const roundId = parseInt(params.id as string)
+  
+  const { address } = useWalletConnection()
+  const { lottery, isLoading } = useGetLottery(roundId)
+  const { hasEntered } = useHasEntered(roundId, address)
+  const { mutate: enterLottery, isPending, stage } = useEnterLottery(roundId)
 
-  // MOCK DATA
-  const entryFee = '10.00'
-  const totalPool = '50.00'
-  const endTime = Math.floor(Date.now() / 1000) + 3600 // 1 hour from now
-  const participants = 5
-  const isActive = true
-  const hasEntered = false
+  if (isLoading || !lottery) {
+    return (
+      <div className="relative min-h-screen overflow-hidden bg-black px-6 py-8">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] to-black" />
+        <div className="relative z-10 mx-auto max-w-[1200px] flex items-center justify-center">
+          <p className="text-white" style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}>
+            Loading lottery...
+          </p>
+        </div>
+      </div>
+    )
+  }
 
-  const odds = `1 in ${participants} chance`
+  // Extract lottery data
+  const entryFee = formatUSDC(lottery.entryFee)
+  const totalPool = formatUSDC(lottery.totalPool)
+  const endTime = Number(lottery.endTime)
+  const participants = lottery.participants.length
+  const isActive = !lottery.completed && endTime > Math.floor(Date.now() / 1000)
+  
+  const odds = participants > 0 ? `1 in ${participants} chance` : 'Be the first!'
+
+  const handleJoin = () => {
+    if (!isPending && isActive && !hasEntered) {
+      enterLottery(lottery.entryFee)
+    }
+  }
+
+  const getButtonText = () => {
+    if (isPending) {
+      if (stage === 'approving') return 'Approving USDC...'
+      if (stage === 'entering') return 'Entering lottery...'
+      return 'Processing...'
+    }
+    if (hasEntered) return "You've entered"
+    if (!isActive) return 'Lottery ended'
+    return 'Join Now'
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black px-6 py-8">
@@ -83,21 +120,16 @@ export default function LotteryPage() {
 
           {/* Join Button */}
           <button
-            disabled={hasEntered || !isActive}
+            onClick={handleJoin}
+            disabled={hasEntered || !isActive || isPending}
             className={`mt-8 w-full rounded-lg px-8 py-4 text-lg transition-all md:w-auto ${
-              hasEntered
-                ? 'cursor-not-allowed bg-gray-600 text-white opacity-50'
-                : !isActive
+              hasEntered || !isActive || isPending
                 ? 'cursor-not-allowed bg-gray-600 text-white opacity-50'
                 : 'bg-gradient-to-r from-[#D4FF5E] to-[#B8FF00] text-black shadow-md hover:shadow-lg hover:from-[#E8FFB7] hover:to-[#D4FF5E]'
             }`}
             style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 700 }}
           >
-            {hasEntered
-              ? "You've entered"
-              : !isActive
-              ? 'Lottery ended'
-              : 'Join Now'}
+            {getButtonText()}
           </button>
 
           {/* Lottery ID for reference */}
@@ -105,7 +137,7 @@ export default function LotteryPage() {
             className="mt-8 text-xs text-gray-500"
             style={{ fontFamily: 'AEONIK, sans-serif', fontWeight: 400 }}
           >
-            Lottery ID: {id}
+            Lottery ID: {roundId}
           </p>
         </div>
       </div>
